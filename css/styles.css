@@ -1,0 +1,347 @@
+@import url("colors.css");
+
+:root {
+  /* Neutral Colors */
+  --neutral-900: hsl(233, 18%, 9%);
+  --neutral-800: hsl(235, 14%, 15%);
+  --neutral-700: hsl(235, 13%, 19%);
+  --neutral-600: hsl(234, 14%, 29%);
+  --neutral-200: hsl(233, 18%, 9%);
+  --neutral-100: hsl(240, 24%, 96%);
+  --neutral-0: hsl(0, 0%, 100%);
+
+  /* Blue Colors */
+  --blue-500: hsl(274, 90%, 73%);
+  --blue-400: hsl(274, 90%, 80%);
+
+  /* Yellow Colors */
+  --yellow-500: hsl(37, 100%, 50%);
+
+  /* Orange Colors */
+  --orange-500: hsl(15, 99%, 67%);
+  --orange-800: hsl(15, 99%, 43%);
+
+  /* Black */
+  --black: #000000;
+  
+  /* Typography */
+  /* Font Sizes */
+  --font-size-64: 4rem;
+  --font-size-40: 2.5rem;
+  --font-size-24: 1.5rem;
+  --font-size-20: 1.25rem;
+  --font-size-16: 1rem;
+
+  /* Line Heights */
+  --line-height-100: 100%;
+  --line-height-130: 130%;
+  --line-height-140: 140%;
+
+  /* Letter Spacing */
+  --letter-spacing-1: -1px;
+  --letter-spacing-06: -0.6px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  padding: 1rem;
+  background-image: url(./assets/images/bg-light-theme.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header button {
+  border: none;
+  background-color: var(--neutral-100);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-container img {
+  height: 2rem;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Content */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+h1 {
+  font-size: var(--font-size-40);
+  font-weight: 700;
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-1);
+  color: var(--neutral-900);
+  text-align: center;
+}
+
+.text-input-container textarea {
+  width: 100%;
+  font-family: "DM Sans", sans-serif;
+  height: 10rem;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-200);
+  padding: 0.5rem;
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-140);
+  letter-spacing: var(--letter-spacing-06);
+  background-color: var(--neutral-100);
+  border: none;
+}
+
+.text-input-container textarea:focus {
+  outline: 2px solid var(--blue-500);
+}
+
+.analyzer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.options-container-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#density-heading {
+  margin: 20px 0;
+}
+
+/* Progress bar */
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.progress-label {
+  color: var(--black);
+  min-width: 20px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: var(--neutral-100);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--blue-500);
+  transition: width 0.5s ease-in-out;
+  width: 0;
+}
+
+.progress-percentage {
+  color: var(--black);
+  min-width: 100px;
+}
+
+.width-16 {
+  width: 40%;
+}
+
+.width-11-65 {
+  width: 29%;
+}
+
+.width-11-24 {
+  width: 28%;
+}
+
+.width-8-84 {
+  width: 22%;
+}
+
+.width-8-42 {
+  width: 21%;
+}
+
+.card-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card_one {
+  background-color: var(--blue-400);
+}
+
+.card_two {
+  background-color: var(--yellow-500);
+}
+
+.card_three {
+  background-color: var(--orange-500);
+}
+
+.card-icon {
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: 150px;
+  height: 150px;
+}
+
+.stat-number {
+  font-size: var(--font-size-64);
+  font-weight: 700;
+  margin-left: 12px;
+}
+
+.stat-label {
+  font-size: var(--font-size-20);
+  margin-left: 12px;
+}
+
+.see {
+  display: flex;
+  gap: 10px;
+}
+
+.see p,
+.see span {
+  font-size: var(--font-size-20);
+}
+
+.see span {
+  transform: rotate(90deg);
+  display: inline-block;
+}
+
+.option input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--neutral-600);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.option input[type="checkbox"]:checked {
+  background-color: var(--blue-500);
+  border-color: var(--blue-500);
+}
+
+.option input[type="checkbox"]:checked::after {
+  content: "\2714";
+  position: absolute;
+  color: var(--black);
+  font-size: 14px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.option input[type="checkbox"]:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px var(--blue-500);
+}
+
+.option label {
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding: 1rem 2.2rem;
+  }
+
+  h1 {
+    font-size: var(--font-size-64);
+    max-width: 510px;
+    margin: 0 auto;
+  }
+
+  .card-wrapper {
+    flex-direction: row;
+  }
+
+  .options-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .options-container-1 {
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .options-container-1 .option {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 1rem 4rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    padding: 1rem 18rem;
+  }
+}
