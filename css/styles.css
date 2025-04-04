@@ -236,17 +236,20 @@ h1 {
   right: -30px;
   width: 150px;
   height: 150px;
+  z-index: 1;
 }
 
 .stat-number {
   font-size: var(--font-size-64);
   font-weight: 700;
   margin-left: 12px;
+  z-index: 99;
 }
 
 .stat-label {
   font-size: var(--font-size-20);
   margin-left: 12px;
+  z-index: 99;
 }
 
 .see {
@@ -289,6 +292,11 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.option input[type="checkbox"]:hover {
+  background-color: var(--blue-500);
+  border: 1px solid var(--blue-500);
 }
 
 .option input[type="checkbox"]:focus {
