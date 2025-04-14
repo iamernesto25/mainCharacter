@@ -60,6 +60,7 @@ body {
   gap: 2.5rem;
 }
 
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -142,11 +143,10 @@ h1 {
   margin: 20px 0;
 }
 
-/* Progress bar */
 .progress-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   font-size: 18px;
   color: #ffffff;
   margin-bottom: 10px;
@@ -171,31 +171,12 @@ h1 {
   background-color: var(--blue-500);
   transition: width 0.5s ease-in-out;
   width: 0;
+  border-radius: 10px;
 }
 
 .progress-percentage {
   color: var(--black);
-  min-width: 100px;
-}
-
-.width-16 {
-  width: 40%;
-}
-
-.width-11-65 {
-  width: 29%;
-}
-
-.width-11-24 {
-  width: 28%;
-}
-
-.width-8-84 {
-  width: 22%;
-}
-
-.width-8-42 {
-  width: 21%;
+  min-width: 150px;
 }
 
 .card-wrapper {
@@ -255,6 +236,7 @@ h1 {
 .see {
   display: flex;
   gap: 10px;
+  cursor: pointer;
 }
 
 .see p,
@@ -310,6 +292,34 @@ h1 {
   margin-left: 8px;
 }
 
+#character-limit-value {
+  width: 50px;
+  margin-left: 8px; 
+  display: none;
+  text-align: center;
+  height: 8px;
+  padding: 10px 0.3rem;
+  border-radius: 5px;
+  border: 1px solid var(--neutral-200);
+}
+
+#character-limit-value:focus {
+  outline: 1px solid var(--black);
+}
+
+/* Remove arrows in Chrome, Safari, Edge */
+#character-limit-value::-webkit-outer-spin-button,
+#character-limit-value::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrows in Firefox */
+#character-limit-value {
+  -moz-appearance: textfield;
+}
+
+
 @media (min-width: 768px) {
   body {
     padding: 1rem 2.2rem;
@@ -352,4 +362,33 @@ h1 {
   body {
     padding: 1rem 18rem;
   }
+}
+
+.error-message {
+  color: red;
+  margin-top: 8px;
+  display: none;
+  align-items: center;
+  gap: 5px;
+}
+
+.warning-icon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-input-container.limit-exceeded textarea {
+  outline: 2px solid red;
+}
+
+.no-data-message {
+  padding: 20px 0;
+  text-align: left;
+  color: var(--neutral-600);
+}
+
+.remaining-letters {
+  margin-top: 10px;
 }
