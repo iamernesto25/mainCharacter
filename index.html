@@ -33,13 +33,19 @@
     <section class="text-analyzer">
       <form class="analyzer-form">
         <div class="text-input-container">
-          
           <textarea 
             name="text" 
             id="text" 
             placeholder="Start typing here… (or paste your text)"
             aria-label="Text input area"
           ></textarea>
+
+         
+          <div class="error-message" id="limit-error">
+            <span class="warning-icon">
+            <img src="./images/info-circle.svg" alt="a warning icon">
+            </span> Limit reached! Your text exceeds the limited characters.
+          </div>
         </div>
         
         <div class="options-container">
@@ -51,9 +57,17 @@
             <div class="option">
               <input type="checkbox" id="character-limit" name="character-limit">
               <label for="character-limit">Set Character Limit</label>
+              <input 
+                type="number" 
+                id="character-limit-value" 
+                name="character-limit-value" 
+                value="300" 
+                min="1" 
+                max="10000" 
+              >
             </div>
           </div>
-          <p>Approx. reading time: &lt;1 min</span></p>
+          <p id="reading-time">Approx. reading time: &lt;1 min</p>
         </div>
       </form>
     </section>
@@ -65,7 +79,7 @@
             <div class="card-icon">
               <img
                 src="./images/pattern-character-count.svg"
-                alt=""
+                alt="a character count icon"
                 aria-hidden="true"
               />
             </div>
@@ -77,7 +91,7 @@
             <div class="card-icon">
               <img
                 src="./images/pattern-word-count.svg"
-                alt=""
+                alt="a word count icon"
                 aria-hidden="true"
               />
             </div>
@@ -89,7 +103,7 @@
             <div class="card-icon">
               <img
                 src="./images/pattern-sentence-count.svg"
-                alt=""
+                alt="a sentence count icon"
                 aria-hidden="true"
               />
             </div>
@@ -99,81 +113,20 @@
         </div>
       </div>
 
-      
       <div class="letter-density" aria-labelledby="density-heading">
         <h2 id="density-heading">Letter Density</h2>
-        <div class="progress-wrapper">
-          <span class="progress-label">E</span>
-          <div class="progress-container">
-            <div
-              class="progress-bar width-16"
-              role="progressbar"
-              aria-valuenow="16.06"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span class="progress-percentage">40 (16.06%)</span>
+        
+       
+        <div class="no-data-message">
+          <p>No characters found. Start typing to see letter density.</p>
         </div>
-        <div class="progress-wrapper">
-          <span class="progress-label">I</span>
-          <div class="progress-container">
-            <div
-              class="progress-bar width-11-65"
-              role="progressbar"
-              aria-valuenow="11.65"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span class="progress-percentage">29 (11.65%)</span>
-        </div>
-        <div class="progress-wrapper">
-          <span class="progress-label">T</span>
-          <div class="progress-container">
-            <div
-              class="progress-bar width-11-24"
-              role="progressbar"
-              aria-valuenow="11.24"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span class="progress-percentage">28 (11.24%)</span>
-        </div>
-        <div class="progress-wrapper">
-          <span class="progress-label">O</span>
-          <div class="progress-container">
-            <div
-              class="progress-bar width-8-84"
-              role="progressbar"
-              aria-valuenow="8.84"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span class="progress-percentage">22 (8.84%)</span>
-        </div>
-        <div class="progress-wrapper">
-          <span class="progress-label">N</span>
-          <div class="progress-container">
-            <div
-              class="progress-bar width-8-42"
-              role="progressbar"
-              aria-valuenow="8.42"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span class="progress-percentage">21 (8.42%)</span>
-        </div>
-        <div class="see">
-          <p>See more</p>
-          <span>&gt;</span>
-        </div>
+      </div>
+      <div class="see">
+        <p>See more</p>
+        <span>&gt;</span>
       </div>
     </section>
   </main>
-
+  <script src="./js/main.js"></script>
 </body>
 </html>
