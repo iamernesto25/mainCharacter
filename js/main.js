@@ -31,14 +31,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Error Handling Functions
-    function updateErrorMessage(limit) {
-      elements.limitErrorElem.innerHTML = `<span class="warning-icon"><img src="./images/info-circle.svg" alt=""></span> Limit reached! Your text exceeds the ${limit} characters.`;
+    function updateErrorMessage(limit, charCount, isApproaching = false) {
+      if (charCount < Math.floor(limit * 0.9)) {
+        elements.limitErrorElem.innerHTML = `<span class="warning-icon"><img src="./images/info-circle.svg" alt=""></span> Character count: ${charCount}/${limit}`;
+        elements.limitErrorElem.style.color = "green";
+      } else if (isApproaching) {
+        elements.limitErrorElem.innerHTML = `<span class="warning-icon"><img src="./images/info-circle.svg" alt=""></span> Approaching limit! ${charCount}/${limit} characters.`;
+        elements.limitErrorElem.style.color = "orange";
+      } else {
+        elements.limitErrorElem.innerHTML = `<span class="warning-icon"><img src="./images/info-circle.svg" alt=""></span> Limit reached! ${charCount}/${limit} characters.`;
+        elements.limitErrorElem.style.color = "red";
+      }
     }
 
-    function showLimitError(limit) {
-      updateErrorMessage(limit);
+    function showLimitError(limit, charCount, isApproaching = false) {
+      updateErrorMessage(limit, charCount, isApproaching);
       elements.limitErrorElem.style.display = "flex";
-      elements.textarea.style.outline = "2px solid red";
+      if (!isApproaching) {
+        elements.textarea.style.outline = "2px solid red";
+      } else if (charCount < Math.floor(limit * 0.9)) {
+        elements.textarea.style.outline = "";
+      } else {
+        elements.textarea.style.outline = "2px solid orange";
+      }
     }
 
     function hideLimitError() {
@@ -215,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const charCount = calculateCharCount(text, excludeSpaces);
       
       if (charCount > limit) {
-        showLimitError(limit);
+        showLimitError(limit, charCount, false);
         excludeSpaces 
           ? truncateExcludingSpaces(text, limit)
           : elements.textarea.value = text.substring(0, limit);
@@ -242,9 +257,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const excludeSpaces = elements.excludeSpacesCheckbox.checked;
       const charCount = calculateCharCount(text, excludeSpaces);
       
-      updateErrorMessage(limit);
+      // Calculate the threshold for warning (90% of the limit)
+      const warningThreshold = Math.floor(limit * 0.9);
       
-      charCount >= limit ? showLimitError(limit) : hideLimitError();
+      // Always show the message when character limit is enabled
+      elements.limitErrorElem.style.display = "flex";
+      
+      if (charCount >= limit) {
+        showLimitError(limit, charCount, false);
+      } else if (charCount >= warningThreshold) {
+        showLimitError(limit, charCount, true);
+      } else {
+        showLimitError(limit, charCount, false);
+      }
     }
 
     // Main Analysis Function
