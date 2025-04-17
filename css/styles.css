@@ -40,6 +40,15 @@
   /* Letter Spacing */
   --letter-spacing-1: -1px;
   --letter-spacing-06: -0.6px;
+
+  /* primary colors */
+  --primary-color: var(var(--neutral-0));
+  --secondary-color: var(--neutral-900);
+  --accent-color: var(--blue-500);
+}
+
+.dark-theme {
+  --primary-color: var(--neutral-900);
 }
 
 * {
@@ -107,6 +116,7 @@ h1 {
   width: 100%;
   font-family: "DM Sans", sans-serif;
   height: 10rem;
+  resize: none;
   border-radius: 10px;
   border: 1px solid var(--neutral-200);
   padding: 0.5rem;
@@ -176,7 +186,8 @@ h1 {
 
 .progress-percentage {
   color: var(--black);
-  min-width: 150px;
+  min-width: 130px;
+  text-align: end;
 }
 
 .card-wrapper {
@@ -295,7 +306,7 @@ h1 {
 #character-limit-value {
   width: 50px;
   margin-left: 8px; 
-  display: none;
+  visibility: hidden;
   text-align: center;
   height: 8px;
   padding: 10px 0.3rem;
