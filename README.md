@@ -33,6 +33,8 @@ character-counter/
 │   ├── pattern-character-count.svg
 │   ├── pattern-word-count.svg
 │   └── pattern-sentence-count.svg
+├── js/
+│   └── main.js
 └── assets/
     └── images/
         └── favicon-32x32.png
