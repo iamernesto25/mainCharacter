@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateErrorMessage(limit, charCount, isApproaching = false) {
       if (charCount < Math.floor(limit * 0.9)) {
         elements.limitErrorElem.innerHTML = `<span class="warning-icon"><img src="./images/info-circle.svg" alt=""></span> Character count: ${charCount}/${limit}`;
-        elements.limitErrorElem.style.color = "green";
+        elements.limitErrorElem.style.color = "hsl(274, 90%, 80%)";
       } else if (isApproaching) {
         elements.limitErrorElem.innerHTML = `<span class="warning-icon"><img src="./images/info-circle.svg" alt=""></span> Approaching limit! ${charCount}/${limit} characters.`;
         elements.limitErrorElem.style.color = "orange";
@@ -47,12 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLimitError(limit, charCount, isApproaching = false) {
       updateErrorMessage(limit, charCount, isApproaching);
       elements.limitErrorElem.style.display = "flex";
-      if (!isApproaching) {
+      if (charCount >= limit) {
         elements.textarea.style.outline = "2px solid red";
-      } else if (charCount < Math.floor(limit * 0.9)) {
-        elements.textarea.style.outline = "";
       } else {
-        elements.textarea.style.outline = "2px solid orange";
+        elements.textarea.style.outline = "";
       }
     }
 
