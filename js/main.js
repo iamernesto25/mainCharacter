@@ -51,15 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
       updateErrorMessage(limit, charCount, isApproaching);
       elements.limitErrorElem.style.display = "flex";
       if (charCount >= limit) {
-        elements.textarea.style.outline = "2px solid red";
+        elements.textarea.style.outline = "2px solid #fe8158";
+        elements.textarea.style.boxShadow = "1px 1px 10px 1px #fe8158";
       } else {
         elements.textarea.style.outline = "";
+        elements.textarea.style.boxShadow = "none";
       }
     }
 
     function hideLimitError() {
       elements.limitErrorElem.style.display = "none";
       elements.textarea.style.outline = "";
+      elements.textarea.style.boxShadow = "none";
     }
 
     // Text Analysis Core Functions

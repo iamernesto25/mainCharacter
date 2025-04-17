@@ -159,6 +159,7 @@ h1 {
 
 .text-input-container textarea:focus {
   outline: 2px solid var(--blue-500);
+  box-shadow: 1px 1px 10px 1px var(--blue-500);
 }
 
 .analyzer-form {
