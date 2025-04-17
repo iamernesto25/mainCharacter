@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Configuration Settings
     const config = {
-      defaultCharLimit: 280,
       initialShowCount: 5,
       wordsPerMinute: 200 // Average adult reading speed
     };
@@ -207,9 +206,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Character Limit Functions
     function getCharacterLimit() {
-      return elements.characterLimitCheckbox.checked 
-        ? (parseInt(elements.characterLimitInput.value) || config.defaultCharLimit) 
-        : Infinity;
+      if (!elements.characterLimitCheckbox.checked) {
+        return Infinity;
+      }
+      const inputValue = elements.characterLimitInput.value;
+      return inputValue ? parseInt(inputValue) : Infinity;
     }
 
     function truncateExcludingSpaces(text, limit) {
@@ -258,13 +259,19 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const text = elements.textarea.value;
       const limit = getCharacterLimit();
+      
+      if (limit === Infinity) {
+        elements.limitErrorElem.style.display = "none";
+        return;
+      }
+
       const excludeSpaces = elements.excludeSpacesCheckbox.checked;
       const charCount = calculateCharCount(text, excludeSpaces);
       
       // Calculate the threshold for warning (90% of the limit)
       const warningThreshold = Math.floor(limit * 0.9);
       
-      // Always show the message when character limit is enabled
+      // Always show the message when character limit is enabled and has a value
       elements.limitErrorElem.style.display = "flex";
       
       if (charCount >= limit) {
