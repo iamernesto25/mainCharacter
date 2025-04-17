@@ -45,10 +45,30 @@
   --primary-color: var(var(--neutral-0));
   --secondary-color: var(--neutral-900);
   --accent-color: var(--blue-500);
+
+  /* Theme Variables */
+  --bg-color: var(--neutral-100);
+  --text-color: var(--neutral-900);
+  --card-bg-color: var(--neutral-0);
+  --input-bg-color: var(--neutral-100);
+  --input-border-color: var(--neutral-200);
+  --progress-bg-color: var(--neutral-100);
+  --progress-label-color: var(--neutral-900);
+  --progress-percentage-color: var(--neutral-900);
+  --header-button-bg: var(--neutral-100);
 }
 
 .dark-theme {
   --primary-color: var(--neutral-900);
+  --bg-color: var(--neutral-900);
+  --text-color: var(--neutral-100);
+  --card-bg-color: var(--neutral-800);
+  --input-bg-color: var(--neutral-800);
+  --input-border-color: var(--neutral-600);
+  --progress-bg-color: var(--neutral-700);
+  --progress-label-color: var(--neutral-100);
+  --progress-percentage-color: var(--neutral-100);
+  --header-button-bg: var(--neutral-700);
 }
 
 * {
@@ -60,13 +80,22 @@
 body {
   font-family: "DM Sans", sans-serif;
   padding: 1rem;
-  background-image: url(./assets/images/bg-light-theme.png);
+  background-color: var(--bg-color);
+  background-image: url('../images/bg-light-theme.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+}
+
+body.dark-theme {
+  background-image: url('../images/bg-dark-theme.png');
 }
 
 /* Header */
@@ -78,7 +107,7 @@ header {
 
 header button {
   border: none;
-  background-color: var(--neutral-100);
+  background-color: var(--header-button-bg);
   cursor: pointer;
   width: 2rem;
   height: 2rem;
@@ -86,6 +115,7 @@ header button {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--text-color);
 }
 
 .logo-container img {
@@ -108,7 +138,7 @@ h1 {
   font-weight: 700;
   line-height: var(--line-height-100);
   letter-spacing: var(--letter-spacing-1);
-  color: var(--neutral-900);
+  color: var(--text-color);
   text-align: center;
 }
 
@@ -118,13 +148,13 @@ h1 {
   height: 10rem;
   resize: none;
   border-radius: 10px;
-  border: 1px solid var(--neutral-200);
+  border: none;
   padding: 0.5rem;
   font-size: var(--font-size-20);
   line-height: var(--line-height-140);
   letter-spacing: var(--letter-spacing-06);
-  background-color: var(--neutral-100);
-  border: none;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
 }
 
 .text-input-container textarea:focus {
@@ -163,14 +193,14 @@ h1 {
 }
 
 .progress-label {
-  color: var(--black);
+  color: var(--progress-label-color);
   min-width: 20px;
 }
 
 .progress-container {
   width: 100%;
   height: 10px;
-  background-color: var(--neutral-100);
+  background-color: var(--progress-bg-color);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -185,7 +215,7 @@ h1 {
 }
 
 .progress-percentage {
-  color: var(--black);
+  color: var(--progress-percentage-color);
   min-width: 130px;
   text-align: end;
 }
@@ -208,6 +238,8 @@ h1 {
   border-radius: 12px;
   overflow: hidden;
   position: relative;
+  background-color: var(--card-bg-color);
+  color: var(--neutral-900);
 }
 
 .card_one {
@@ -253,6 +285,7 @@ h1 {
 .see p,
 .see span {
   font-size: var(--font-size-20);
+  color: var(--text-color);
 }
 
 .see span {
@@ -301,6 +334,7 @@ h1 {
 .option label {
   cursor: pointer;
   margin-left: 8px;
+  color: var(--text-color);
 }
 
 #character-limit-value {
@@ -311,7 +345,9 @@ h1 {
   height: 8px;
   padding: 10px 0.3rem;
   border-radius: 5px;
-  border: 1px solid var(--neutral-200);
+  border: 1px solid var(--input-border-color);
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
 }
 
 #character-limit-value:focus {
@@ -397,7 +433,8 @@ h1 {
 .no-data-message {
   padding: 20px 0;
   text-align: left;
-  color: var(--neutral-600);
+  color: var(--text-color);
+  opacity: 0.6;
 }
 
 .remaining-letters {

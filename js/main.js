@@ -15,7 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
       seeMoreButton: document.querySelector(".see"),
       textInputContainer: document.querySelector(".text-input-container"),
       limitErrorElem: document.getElementById("limit-error"),
-      readingTimeElem: document.getElementById("reading-time")
+      readingTimeElem: document.getElementById("reading-time"),
+      themeToggleButton: document.querySelector(".theme-switcher button"),
+      themeToggleIcon: document.querySelector(".theme-switcher button img"),
+      body: document.body
     };
 
     // Configuration Settings
@@ -302,6 +305,26 @@ document.addEventListener("DOMContentLoaded", () => {
       checkCharacterLimit();
     }
 
+    // Theme Functions
+    function setTheme(isDark) {
+      elements.body.classList.toggle('dark-theme', isDark);
+      elements.themeToggleIcon.src = isDark ? './images/icon-sun.svg' : './images/icon-moon.svg';
+      elements.themeToggleIcon.alt = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    function toggleTheme() {
+      const isDark = elements.body.classList.contains('dark-theme');
+      setTheme(!isDark);
+    }
+
+    function initializeTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        setTheme(true);
+      }
+    }
+
     function initializeEventListeners() {
       elements.textarea.addEventListener("input", handleTextInput);
       
@@ -317,10 +340,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       elements.characterLimitInput.addEventListener("input", checkCharacterLimit);
       elements.characterLimitInput.addEventListener("change", checkCharacterLimit);
+      
+      // Add theme toggle listener
+      elements.themeToggleButton.addEventListener('click', toggleTheme);
     }
 
     // Initialization Function
     function init() {
+      initializeTheme();
       initializeEventListeners();
       updateAnalysis();
     }
