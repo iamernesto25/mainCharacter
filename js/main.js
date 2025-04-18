@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
       readingTimeElem: document.getElementById("reading-time"),
       themeToggleButton: document.querySelector(".theme-switcher button"),
       themeToggleIcon: document.querySelector(".theme-switcher button img"),
+      logo:document.querySelector(".logo-container img"),
       body: document.body
     };
 
@@ -319,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function setTheme(isDark) {
       elements.body.classList.toggle('dark-theme', isDark);
       elements.themeToggleIcon.src = isDark ? './images/icon-sun.svg' : './images/icon-moon.svg';
+      elements.logo.src = isDark ? './images/logo-dark-theme.svg' : './images/logo-light-theme.svg';
       elements.themeToggleIcon.alt = isDark ? 'Switch to light mode' : 'Switch to dark mode';
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
