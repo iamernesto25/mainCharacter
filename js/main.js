@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
       characterLimitCheckbox: document.getElementById("character-limit"),
       characterLimitInput: document.getElementById("character-limit-value"),
       totalCharElem: document.querySelector(".card_one .stat-number"),
+      totalCharLabelElem: document.getElementById("total-char-label"),
       wordCountElem: document.querySelector(".card_two .stat-number"),
       sentenceCountElem: document.querySelector(".card_three .stat-number"),
       letterDensityContainer: document.querySelector(".letter-density"),
@@ -341,6 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.textarea.addEventListener("input", handleTextInput);
       
       elements.excludeSpacesCheckbox.addEventListener("change", () => {
+        elements.totalCharLabelElem.textContent = elements.excludeSpacesCheckbox.checked ? "Total Characters (no space)" : "Total Characters";
         updateAnalysis();
         checkCharacterLimit();
       });

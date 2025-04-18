@@ -272,7 +272,7 @@ h1 {
 }
 
 .stat-label {
-  font-size: var(--font-size-20);
+  font-size: 1.15rem;
   margin-left: 12px;
   z-index: 99;
 }
@@ -408,7 +408,7 @@ h1 {
 
 @media (min-width: 1200px) {
   body {
-    padding: 1rem 14rem;
+    padding: 1rem 10rem;
   }
 }
 
