@@ -205,18 +205,37 @@ const elements = {
   }
   
   function updateLetterDensity(text) {
-    const letters = text.toLowerCase().replace(/[^a-z]/g, "").split("");
-    const totalLetters = letters.length;
+    // Include all characters except whitespace
+    const characters = text.replace(/\s/g, "").split("");
+    const totalCharacters = characters.length;
     
     clearLetterDensityContent();
     
-    if (totalLetters === 0) {
+    if (totalCharacters === 0) {
       showNoDataMessage();
       return;
     }
     
     hideNoDataMessage();
-    displayLetterFrequency(letters, totalLetters);
+    
+    // Count each character individually
+    const characterMap = characters.reduce((acc, char) => {
+      acc[char] = (acc[char] || 0) + 1;
+      return acc;
+    }, {});
+    
+    // Convert to array and sort by frequency
+    const sortedCharacters = Object.entries(characterMap)
+      .sort((a, b) => b[1] - a[1])
+      .map(([char, count]) => [char, count]);
+    
+    const initialCharacters = sortedCharacters.slice(0, config.initialShowCount);
+    const remainingCharacters = sortedCharacters.slice(config.initialShowCount);
+    
+    const initialHTML = generateDensityHTML(initialCharacters, totalCharacters);
+    elements.letterDensityContainer.insertAdjacentHTML("beforeend", initialHTML);
+    
+    setupSeeMoreFunctionality(remainingCharacters, totalCharacters);
   }
   
   // Character Limit Functions
