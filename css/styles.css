@@ -191,6 +191,8 @@ h1 {
   font-size: 18px;
   color: #ffffff;
   margin-bottom: 10px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
 }
 
 .progress-label {
@@ -213,6 +215,8 @@ h1 {
   transition: width 0.5s ease-in-out;
   width: 0;
   border-radius: 10px;
+  transform-origin: left;
+  animation: expandBar 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
 }
 
 .progress-percentage {
@@ -281,6 +285,7 @@ h1 {
   display: flex;
   gap: 10px;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .see p,
@@ -292,6 +297,11 @@ h1 {
 .see span {
   transform: rotate(90deg);
   display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.see.expanded span {
+  transform: rotate(90deg);
 }
 
 .option input[type="checkbox"] {
@@ -367,6 +377,152 @@ h1 {
   -moz-appearance: textfield;
 }
 
+/* Animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRotate {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%) rotate(-15deg);
+    opacity: 0;
+  }
+}
+
+@keyframes expandBar {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(1.1);
+  }
+  70% {
+    transform: scaleX(0.95);
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes collapseBarNew {
+  0% {
+    transform: scaleX(1) translateY(0);
+    opacity: 1;
+  }
+  40% {
+    transform: scaleX(0.8) translateY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scaleX(0) translateY(10px);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Progress bar animations */
+.progress-wrapper {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.progress-bar {
+  transform-origin: left;
+  animation: expandBar 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
+}
+
+/* See more button animation */
+.see {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.see:hover {
+  transform: translateX(5px);
+}
+
+.see span {
+  transition: transform 0.3s ease;
+}
+
+.see.expanded span {
+  transform: rotate(90deg);
+}
+
+/* Remaining letters container */
+.remaining-letters {
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.remaining-letters .progress-wrapper {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.remaining-letters.show-stagger .progress-wrapper {
+  animation: slideInRight 0.5s ease forwards;
+}
+
+.remaining-letters.show-stagger .progress-bar {
+  animation: expandBar 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.remaining-letters.hide-stagger .progress-wrapper {
+  animation: slideOutRotate 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.remaining-letters.hide-stagger .progress-bar {
+  animation: collapseBarNew 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Add animation delay for staggered effect */
+.remaining-letters.show-stagger .progress-wrapper:nth-child(1) { animation-delay: 0.1s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(2) { animation-delay: 0.2s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(3) { animation-delay: 0.3s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(4) { animation-delay: 0.4s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(5) { animation-delay: 0.5s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(6) { animation-delay: 0.6s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(7) { animation-delay: 0.7s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(8) { animation-delay: 0.8s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(9) { animation-delay: 0.9s; }
+.remaining-letters.show-stagger .progress-wrapper:nth-child(10) { animation-delay: 1s; }
+
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(10) { animation-delay: 0s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(9) { animation-delay: 0.05s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(8) { animation-delay: 0.1s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(7) { animation-delay: 0.15s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(6) { animation-delay: 0.2s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(5) { animation-delay: 0.25s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(4) { animation-delay: 0.3s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(3) { animation-delay: 0.35s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(2) { animation-delay: 0.4s; }
+.remaining-letters.hide-stagger .progress-wrapper:nth-child(1) { animation-delay: 0.45s; }
 
 @media (min-width: 768px) {
   body {
@@ -436,8 +592,4 @@ h1 {
   text-align: left;
   color: var(--text-color);
   opacity: 0.6;
-}
-
-.remaining-letters {
-  margin-top: 10px;
 }

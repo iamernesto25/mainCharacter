@@ -143,25 +143,29 @@ const elements = {
     
     const isExpanded = remainingContainer.style.display !== "none";
     
-    remainingContainer.style.display = isExpanded ? "none" : "block";
-    seeMoreText.textContent = isExpanded ? "See more" : "See less";
-    seeMoreArrow.innerHTML = isExpanded ? "&gt;" : "&lt;";
-  }
-  
-  function configureSeeMoreButton() {
-    elements.seeMoreButton.style.display = "flex";
-    const seeMoreText = elements.seeMoreButton.querySelector("p");
-    const seeMoreArrow = elements.seeMoreButton.querySelector("span");
-    seeMoreText.textContent = "See more";
-    seeMoreArrow.innerHTML = "&gt;";
-    
-    // Clone to remove existing listeners
-    const newButton = elements.seeMoreButton.cloneNode(true);
-    elements.seeMoreButton.parentNode.replaceChild(newButton, elements.seeMoreButton);
-    elements.seeMoreButton = newButton;
-    
-    // Add toggle functionality
-    newButton.addEventListener("click", toggleRemainingLetters);
+    if (isExpanded) {
+      // Start collapse animation
+      remainingContainer.classList.remove('show-stagger');
+      remainingContainer.classList.add('hide-stagger');
+      
+      // Wait for animation to complete before hiding
+      setTimeout(() => {
+        remainingContainer.style.display = "none";
+        remainingContainer.classList.remove('hide-stagger');
+        seeMoreText.textContent = "See more";
+        elements.seeMoreButton.classList.remove('expanded');
+      }, 1100); // Slightly longer than the longest animation delay + duration
+    } else {
+      remainingContainer.style.display = "block";
+      // Reset any existing animation classes
+      remainingContainer.classList.remove('hide-stagger');
+      // Start expand animation
+      setTimeout(() => {
+        remainingContainer.classList.add('show-stagger');
+        seeMoreText.textContent = "See less";
+        elements.seeMoreButton.classList.add('expanded');
+      }, 50); // Small delay to ensure display: block is applied
+    }
   }
   
   function setupSeeMoreFunctionality(remainingLetters, totalLetters) {
@@ -169,7 +173,19 @@ const elements = {
       const remainingHTML = `<div class="remaining-letters" style="display: none;">${generateDensityHTML(remainingLetters, totalLetters)}</div>`;
       elements.letterDensityContainer.insertAdjacentHTML("beforeend", remainingHTML);
       
-      configureSeeMoreButton();
+      elements.seeMoreButton.style.display = "flex";
+      const seeMoreText = elements.seeMoreButton.querySelector("p");
+      const seeMoreArrow = elements.seeMoreButton.querySelector("span");
+      seeMoreText.textContent = "See more";
+      seeMoreArrow.innerHTML = "&gt;";
+      
+      // Clone to remove existing listeners
+      const newButton = elements.seeMoreButton.cloneNode(true);
+      elements.seeMoreButton.parentNode.replaceChild(newButton, elements.seeMoreButton);
+      elements.seeMoreButton = newButton;
+      
+      // Add toggle functionality
+      newButton.addEventListener("click", toggleRemainingLetters);
     } else {
       elements.seeMoreButton.style.display = "none";
     }
