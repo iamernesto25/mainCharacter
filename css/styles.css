@@ -295,13 +295,13 @@ h1 {
 }
 
 .see span {
-  transform: rotate(90deg);
-  display: inline-block;
   transition: transform 0.3s ease;
+  display: inline-block;
+  transform: rotate(90deg);
 }
 
 .see.expanded span {
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 .option input[type="checkbox"] {
@@ -466,13 +466,13 @@ h1 {
   transform: translateX(5px);
 }
 
-.see span {
+/* .see span {
   transition: transform 0.3s ease;
 }
 
 .see.expanded span {
-  transform: rotate(90deg);
-}
+  transform: rotate(-90deg);
+} */
 
 /* Remaining letters container */
 .remaining-letters {
