@@ -1,5 +1,3 @@
-// Pure Functions for Text Analysis
-// These functions are isolated from the DOM and side effects for better testability
 
 // Configuration Settings
 export const config = {
