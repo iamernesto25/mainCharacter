@@ -1,4 +1,4 @@
-import { init } from './characterCounter.js';
+import { init } from './domFunctions.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
