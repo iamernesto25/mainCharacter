@@ -1,5 +1,11 @@
 @import url("colors.css");
-
+/* 
+  This is the main stylesheet for the project.
+  It contains the styles for the entire project.
+  It is used to style the entire project.
+  It is also used to style the project in different themes.
+  It is also used to style the project in different media queries.
+*/
 :root {
   /* Neutral Colors */
   --neutral-900: hsl(233, 18%, 9%);
