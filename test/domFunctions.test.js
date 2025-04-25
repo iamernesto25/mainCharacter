@@ -100,7 +100,7 @@ jest.mock('../js/pureFunctions.js', () => ({
     initialShowCount: 5,
     wordsPerMinute: 200
   }
-}));
+}))
 
 describe('Dynamic DOM Updates on Typing Simulation', () => {
 
