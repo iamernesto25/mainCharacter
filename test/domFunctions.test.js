@@ -171,3 +171,4 @@ afterEach(() => {
   document.body.innerHTML = '';
   jest.clearAllMocks();
 });
+// test for the reading time
