@@ -171,3 +171,4 @@ afterEach(() => {
   document.body.innerHTML = ''; // Clean up DOM
   jest.clearAllMocks();
 });
+// stat
