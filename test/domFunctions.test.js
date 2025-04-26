@@ -3,6 +3,7 @@ import {
     elements,
     handleTextInput,
     checkCharacterLimit,
+    config,
   } from '../js/domFunctions.js';
 import * as pf from '../js/pureFunctions.js';
 
@@ -78,29 +79,31 @@ beforeEach(() => {
 });
 
 // Mock pure functions
-jest.mock('../js/pureFunctions.js', () => ({
-  __esModule: true, 
-  formatNumber: jest.fn().mockImplementation(num => num.toString().padStart(2, "0")),
-  calculateCharCount: jest.fn().mockReturnValue(5),
-  countWords: jest.fn().mockReturnValue(['hello', 'world']),
-  countSentences: jest.fn().mockReturnValue(['Hello world.']),
-  calculateReadingTime: jest.fn().mockReturnValue('1 min'),
-  calculateLetterFrequency: jest.fn().mockReturnValue({
-    totalCharacters: 10,
-    sortedCharacters: [['e', 3], ['h', 2], ['l', 3], ['o', 2]]
-  }),
-  generateDensityHTML: jest.fn().mockImplementation((letters, total) => 
+jest.mock('../js/pureFunctions.js', () => {
+  const actual = jest.requireActual('../js/pureFunctions.js'); // <-- Fix
+
+  return {
+    __esModule: true,
+    ...actual, // <-- Keep the real config or any real functions
+    formatNumber: jest.fn().mockImplementation(num => num.toString().padStart(2, "0")),
+    calculateCharCount: jest.fn().mockReturnValue(5),
+    countWords: jest.fn().mockReturnValue(['hello', 'world']),
+    countSentences: jest.fn().mockReturnValue(['Hello world.']),
+    calculateReadingTime: jest.fn().mockReturnValue('1 min'),
+    calculateLetterFrequency: jest.fn().mockReturnValue({
+      totalCharacters: 10,
+      sortedCharacters: [['e', 3], ['h', 2], ['l', 3], ['o', 2]]
+    }),
+    generateDensityHTML: jest.fn().mockImplementation((letters, total) => 
       letters.map(([l, c]) => `<div class="progress-wrapper">${l}: ${c}</div>`).join('')
-  ),
-  shouldShowLimitWarning: jest.fn().mockReturnValue(false),
-  shouldShowLimitError: jest.fn().mockReturnValue(false),
-  getMessageColor: jest.fn().mockReturnValue('red'),
-  truncateExcludingSpaces: jest.fn().mockImplementation(text => text.substring(0, 10)),
-  config: {
-    initialShowCount: 5,
-    wordsPerMinute: 200
-  }
-}))
+    ),
+    shouldShowLimitWarning: jest.fn().mockReturnValue(false),
+    shouldShowLimitError: jest.fn().mockReturnValue(false),
+    getMessageColor: jest.fn().mockReturnValue('red'),
+    truncateExcludingSpaces: jest.fn().mockImplementation(text => text.substring(0, 10)),
+  };
+});
+
 
 describe('Dynamic DOM Updates on Typing Simulation', () => {
 
