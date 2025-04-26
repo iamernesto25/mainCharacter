@@ -1,10 +1,11 @@
 // tests/domFunctions.test.js
+
 import {
-    elements,
-    handleTextInput,
-    checkCharacterLimit,
-    config,
-  } from '../js/domFunctions.js';
+  elements,
+  handleTextInput,
+  checkCharacterLimit,
+  config,
+} from '../js/domFunctions.js';
 import * as pf from '../js/pureFunctions.js';
 
 // Mock the DOM before each test
@@ -43,14 +44,12 @@ beforeEach(() => {
       </div>
       <div class="letter-density">
         <div class="no-data-message" style="display: block;"></div>
-        <!-- .remaining-letters is added dynamically, so start without it -->
       </div>
       <div class="see" style="display: none;">
         <p>See more</p>
         <span aria-hidden="true">&gt;</span>
       </div>
       <div class="error-message" id="limit-error" style="display: none;">
-         <!-- Content set by innerHTML -->
       </div>
     </main>
   `;
@@ -79,99 +78,97 @@ beforeEach(() => {
 });
 
 // Mock pure functions
-jest.mock('../js/pureFunctions.js', () => {
-  const actual = jest.requireActual('../js/pureFunctions.js'); // <-- Fix
-
-  return {
-    __esModule: true,
-    ...actual, // <-- Keep the real config or any real functions
-    formatNumber: jest.fn().mockImplementation(num => num.toString().padStart(2, "0")),
-    calculateCharCount: jest.fn().mockReturnValue(5),
-    countWords: jest.fn().mockReturnValue(['hello', 'world']),
-    countSentences: jest.fn().mockReturnValue(['Hello world.']),
-    calculateReadingTime: jest.fn().mockReturnValue('1 min'),
-    calculateLetterFrequency: jest.fn().mockReturnValue({
-      totalCharacters: 10,
-      sortedCharacters: [['e', 3], ['h', 2], ['l', 3], ['o', 2]]
-    }),
-    generateDensityHTML: jest.fn().mockImplementation((letters, total) => 
-      letters.map(([l, c]) => `<div class="progress-wrapper">${l}: ${c}</div>`).join('')
-    ),
-    shouldShowLimitWarning: jest.fn().mockReturnValue(false),
-    shouldShowLimitError: jest.fn().mockReturnValue(false),
-    getMessageColor: jest.fn().mockReturnValue('red'),
-    truncateExcludingSpaces: jest.fn().mockImplementation(text => text.substring(0, 10)),
-  };
-});
-
+jest.mock('../js/pureFunctions.js', () => ({
+  __esModule: true,
+  formatNumber: jest.fn().mockImplementation(num => num.toString().padStart(2, "0")),
+  calculateCharCount: jest.fn().mockReturnValue(5),
+  countWords: jest.fn().mockReturnValue(['hello', 'world']),
+  countSentences: jest.fn().mockReturnValue(['Hello world.']),
+  calculateReadingTime: jest.fn().mockReturnValue('1 min'),
+  calculateLetterFrequency: jest.fn().mockReturnValue({
+    totalCharacters: 10,
+    sortedCharacters: [['e', 3], ['h', 2], ['l', 3], ['o', 2]]
+  }),
+  generateDensityHTML: jest.fn().mockImplementation((letters, total) =>
+    letters.map(([l, c]) => `<div class="progress-wrapper">${l}: ${c}</div>`).join('')
+  ),
+  shouldShowLimitWarning: jest.fn().mockReturnValue(false),
+  shouldShowLimitError: jest.fn().mockReturnValue(false),
+  getMessageColor: jest.fn().mockReturnValue('red'),
+  truncateExcludingSpaces: jest.fn().mockImplementation(text => text.substring(0, 10)),
+  config: {
+    initialShowCount: 5,
+    wordsPerMinute: 200,
+  },
+}));
 
 describe('Dynamic DOM Updates on Typing Simulation', () => {
 
   test('should update counters and reading time when text is entered', () => {
-    // Arrange: Set specific return values for this scenario
+    // Arrange
     pf.calculateCharCount.mockReturnValue(11);
-    pf.countWords.mockReturnValue(['Hello', 'world']); // Length = 2
-    pf.countSentences.mockReturnValue(['Hello world.']); // Length = 1
-    pf.calculateReadingTime.mockReturnValue('<1 min'); // For 2 words
+    pf.countWords.mockReturnValue(['Hello', 'world']);
+    pf.countSentences.mockReturnValue(['Hello world.']);
+    pf.calculateReadingTime.mockReturnValue('<1 min');
 
-    // Act: Simulate typing by setting value and calling handler
+    // Act
     elements.textarea.value = 'Hello world.';
-    handleTextInput(); 
+    handleTextInput();
 
-    // Assert: Check if DOM elements reflect the mocked calculations
-    expect(elements.totalCharElem.textContent).toBe('11'); 
-    expect(elements.wordCountElem.textContent).toBe('02'); 
-    expect(elements.sentenceCountElem.textContent).toBe('01'); 
-    expect(elements.readingTimeElem.textContent).toContain('<1 min'); 
+    // Assert
+    expect(elements.totalCharElem.textContent).toBe('11');
+    expect(elements.wordCountElem.textContent).toBe('02');
+    expect(elements.sentenceCountElem.textContent).toBe('01');
+    expect(elements.readingTimeElem.textContent).toContain('<1 min');
     expect(pf.calculateCharCount).toHaveBeenCalledWith('Hello world.', false);
     expect(pf.countWords).toHaveBeenCalledWith('Hello world.');
     expect(pf.countSentences).toHaveBeenCalledWith('Hello world.');
-    expect(pf.calculateReadingTime).toHaveBeenCalledWith(2); // Based on mocked word count length
+    expect(pf.calculateReadingTime).toHaveBeenCalledWith(2);
   });
 
   test('should show warning message when approaching character limit', () => {
-    // Arrange: Enable limit and set value
+    // Arrange
     elements.characterLimitCheckbox.checked = true;
     elements.characterLimitInput.value = '100';
-    // Arrange: Mock pure functions for the WARNING state
-    pf.calculateCharCount.mockReturnValue(95); 
+    pf.calculateCharCount.mockReturnValue(95);
     pf.shouldShowLimitWarning.mockReturnValue(true);
     pf.shouldShowLimitError.mockReturnValue(false);
     pf.getMessageColor.mockReturnValue('orange');
 
-    // Act: Simulate typing text that triggers the warning
-    elements.textarea.value = 'a '.repeat(47) + 'a'; 
-    handleTextInput(); 
+    // Act
+    elements.textarea.value = 'a '.repeat(47) + 'a';
+    handleTextInput();
 
-    // Assert: Check if the error message element displays the warning
+    // Assert
     expect(elements.limitErrorElem.style.display).toBe('flex');
-    expect(elements.limitErrorElem.innerHTML).toContain('Approaching limit! 95/100 characters.'); 
+    expect(elements.limitErrorElem.innerHTML).toContain('Approaching limit! 95/100 characters.');
     expect(elements.limitErrorElem.style.color).toBe('orange');
-    // Ensure textarea outline isn't red (error state)
-    expect(elements.textarea.style.outline).toBe(''); 
+    expect(elements.textarea.style.outline).toBe('');
   });
 
-  
+  test('should hide error message when limit is disabled', () => {
+    // Arrange
+    elements.characterLimitCheckbox.checked = true;
+    elements.characterLimitInput.value = '100';
+    pf.calculateCharCount.mockReturnValue(101);
+    pf.shouldShowLimitError.mockReturnValue(true);
 
-   test('should hide error message when limit is disabled', () => {
-      // Arrange: Start with limit enabled and error showing
-      elements.characterLimitCheckbox.checked = true;
-      elements.characterLimitInput.value = '100';
-      pf.calculateCharCount.mockReturnValue(101);
-      pf.shouldShowLimitError.mockReturnValue(true);
-      checkCharacterLimit(); // Show the error initially
-      expect(elements.limitErrorElem.style.display).toBe('flex');
+    // Act (Initially show error)
+    checkCharacterLimit();
+    expect(elements.limitErrorElem.style.display).toBe('flex');
 
-      // Act: Disable the character limit checkbox and re-run check
-      elements.characterLimitCheckbox.checked = false;
-      checkCharacterLimit(); // Should now hide the error
-    // Assert: Check if the error message element is hidden
-      expect(elements.limitErrorElem.style.display).toBe('none');
-    });
+    // Act (Disable limit and recheck)
+    elements.characterLimitCheckbox.checked = false;
+    checkCharacterLimit();
+
+    // Assert
+    expect(elements.limitErrorElem.style.display).toBe('none');
+  });
+
 });
 
+// Clean up after each test
 afterEach(() => {
-  document.body.innerHTML = ''; // Clean up DOM
+  document.body.innerHTML = '';
   jest.clearAllMocks();
 });
-// stat
