@@ -4,7 +4,6 @@ import {
   elements,
   handleTextInput,
   checkCharacterLimit,
-  config,
 } from '../js/domFunctions.js';
 import * as pf from '../js/pureFunctions.js';
 
